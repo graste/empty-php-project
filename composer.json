@@ -1,0 +1,40 @@
+{
+    "name": "graste/yournamespace",
+    "type": "library",
+    "description": "yourdescription",
+    "keywords": ["yournamespace", "yourtags"],
+    "homepage": "https://github.com/yourusername/yournamespace",
+    "license": "CC-BY-SA-3.0",
+    "authors": [
+        {
+            "name": "yourusername",
+            "email": "you@example.com",
+            "homepage": "http://example.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "yournamespace@example.com",
+        "issues": "https://github.com/yourusername/yournamespace/issues",
+        "wiki": "https://github.com/yourusername/yournamespace/wiki",
+        "irc": "irc://irc.freenode.org/yourfreenodechannel",
+        "source": "https://github.com/yourusername/yournamespace"
+    },
+    "prefer-stable": true,
+    "config": {
+        "vendor-dir": "vendor"
+    },
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7.22",
+        "squizlabs/php_codesniffer": "~1.4.5",
+        "sami/sami": "~1.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "YourNameSpace\\": "src/"
+        }
+    }
+}
