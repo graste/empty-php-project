@@ -6,7 +6,7 @@
   Status](https://secure.travis-ci.org/yourusername/yournamespace.png)](http://travis-ci.org/yourusername/yournamespace)
 
 Please have a look at the [available
-releases](https://github.com/yourusername/yournamespace/releases).
+releases](releases).
 
 ## Purpose
 
