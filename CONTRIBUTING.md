@@ -1,10 +1,8 @@
 # Contributing
 
-Your input and contributions are very welcome! Please open issues with
-improvements, feature requests or bug reports.
+Your input and contributions are very welcome! Please open issues with improvements, feature requests or bug reports.
 
-If you want to contribute source code, add documentation or fix spelling
-mistakes try this:
+If you want to contribute source code, add documentation or fix spelling mistakes try this:
 
 1. [Fork](http://help.github.com/forking/) the project.
 1. Install vendor libraries needed for testing etc. via `make install-dependencies-dev`.
@@ -13,16 +11,9 @@ mistakes try this:
 1. Add, commit, squash and push the changes to your forked repository.
 1. Send a [pull request](http://help.github.com/pull-requests/) with a well written issue describing the change and why it is necessary.
 
-Please note, that the code tries to adhere to the [PSR-2 Coding Style Guide](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).
-Commits are continously integrated via
-[TravisCI](https://travis-ci.org/yourusername/yournamespace)
-and failing the PHPUnit or PHP CodeSniffer tests will fail the builds. Usually
-the build status will be shown on your pull request by Github. If something
-fails please try to fix your changes as otherwise integrating them is harder.
+Please note, that the code tries to adhere to the [PSR-2 Coding Style Guide](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md). Commits are continously integrated via [TravisCI](https://travis-ci.org/yourusername/yournamespace) and failing the PHPUnit or PHP CodeSniffer tests will fail the builds. Usually the build status will be shown on your pull request by Github. If something fails please try to fix your changes as otherwise integrating them is harder.
 
-There is no Contributor License Agreement (CLA) to sign, but you have to accept
-and agree to the [license](LICENSE.md) and the Contributor Code of Conduct (CoC)
-to get your patches included.
+There is no Contributor License Agreement (CLA) to sign, but you have to accept and agree to the [license](LICENSE.md) and the Contributor Code of Conduct (CoC) to get your patches included.
 
 ## Contributor Code of Conduct
 

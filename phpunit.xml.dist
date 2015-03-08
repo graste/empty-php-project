@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="All Tests">
-            <directory>tests/YourNameSpace</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 

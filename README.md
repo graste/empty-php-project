@@ -13,7 +13,7 @@ yourdescription
 
 ## Requirements and installation
 
-- PHP v5.3+
+- PHP v5.5+
 
 Install the library via [Composer](http://getcomposer.org/):
 
