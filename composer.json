@@ -25,12 +25,14 @@
         "vendor-dir": "vendor"
     },
     "require": {
-        "php": ">=5.5"
+        "php": ">=5.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7.38",
-        "squizlabs/php_codesniffer": "~1.4.8",
-        "sami/sami": "~1.4"
+        "phpunit/phpunit": "~4.3.0",
+        "squizlabs/php_codesniffer": "~1.5.5",
+        "satooshi/php-coveralls": "0.6.*",
+        "sami/sami": "~2.0.0",
+        "phine/sami-github": "~1.0.4"
     },
     "autoload": {
         "psr-4": {

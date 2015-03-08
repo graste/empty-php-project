@@ -10,9 +10,9 @@ help:
 	@echo "Available targets:"
 	@echo "  codesniffer - create codesniffer report in 'build/reports' folder"
 	@echo "  codesniffer-cli - run codesniffer and display report in console"
+	@echo "  composer - download and install/update composer to './composer.phar'"
 	@echo "  docs - generate API documentation into 'docs/api' folder"
 	@echo "  install - install all vendor libraries (including --dev)"
-	@echo "  install-composer - download and install composer to 'bin/composer.phar'"
 	@echo "  update - update all vendor libraries (including --dev)"
 	@echo "  tests - run all tests and create test coverage in 'build/reports"
 	@echo ""
@@ -20,43 +20,58 @@ help:
 	@echo ""
 	@exit 0
 
-install:
+composer:
 
-	@make install-composer
-	@$(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin" ./bin/composer.phar -- install
+	@echo "[INFO] Installing or updating composer."
+	@if [ -e composer.phar ]; then \
+		$(PHP) composer.phar self-update; \
+	else \
+		curl -sS https://getcomposer.org/installer | $(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin"; \
+	fi
 
-install-composer:
+install: composer
 
-	@if [ ! -d ./bin ]; then mkdir bin; fi
-	@if [ ! -f ./bin/composer.phar ]; then curl -sS http://getcomposer.org/installer | $(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin" -- --install-dir=./bin/; fi
+	@echo "[INFO] Installing vendor libraries."
+	@$(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin" composer.phar install --optimize-autoloader
 
-install-dependencies-dev:
+update: composer
 
-	@make install-composer
-	@$(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin" ./bin/composer.phar -- update
+	@echo "[INFO] Updating vendor libraries."
+	@$(PHP) -d apc.enable_cli=0 -d allow_url_fopen=1 -d date.timezone="Europe/Berlin" composer.phar update --optimize-autoloader
 
-tests:
+tests: folders
 
 	@vendor/bin/phpunit tests/
 
-docs:
+folders:
 
-	@if [ -d ./docs/api ]; then rm -rf ./docs/api; fi
-	@$(PHP) vendor/bin/sami.php update ./bin/sami.cfg
+	@mkdir -p ./docs/api
+	@mkdir -p ./build/reports
+	@mkdir -p ./build/logs
+	@mkdir -p ./build/cache
 
-code-sniffer:
+docs: folders
 
-	@if [ ! -d ./build/reports ]; then mkdir -p ./build/reports; fi
+	@$(PHP) vendor/bin/sami.php update ./sami.cfg.php
+
+code-sniffer: folders
+
 	-@$(PHP) ./vendor/bin/phpcs --extensions=php --report=checkstyle --report-file=./build/reports/checkstyle.xml --standard=psr2 ./src/
 
 code-sniffer-cli:
 
 	@./vendor/bin/phpcs -p --report=full --standard=psr2 ./src
 
-composer-dump-autoloads: install-composer
+scrutinizer:
+
+	@make tests
+	@wget https://scrutinizer-ci.com/ocular.phar
+	@$(PHP) ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
+
+dump-autoloads: composer
 
 	@./bin/composer.phar dumpautoload
 
-.PHONY: tests docs help install install-composer install-dependencies-dev code-sniffer code-sniffer-cli composer-dump-autoloads
+.PHONY: tests folders docs help install composer update code-sniffer code-sniffer-cli dump-autoloads scrutinizer
 
 # vim: ts=4:sw=4:noexpandtab:
