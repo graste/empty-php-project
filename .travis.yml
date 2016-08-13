@@ -1,25 +1,51 @@
 language: php
 
-php:
-  - 5.4
-  - 5.5
-  - 5.6
+sudo: required
+dist: trusty
+group: edge
 
-before_script: "make install"
+php:
+  - '5.6'
+  - '7.0'
+  - hhvm
+  - nightly
+
+env:
+  matrix:
+    - PREFER="update --prefer-source --prefer-lowest --prefer-stable"
+    - PREFER="update --prefer-source --prefer-stable"
+    - PREFER="install"
+
+matrix:
+#  fast_finish: true
+  allow_failures:
+    - php: hhvm
+    - php: nightly
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - composer self-update
+  - composer $PREFER
 
 script:
-  - "make tests"
-  - "make code-sniffer-cli"
+  - composer build
 
 after_script:
-  - "php vendor/bin/coveralls -v"
-  - "make scrutinizer"
+  - php vendor/bin/coveralls -v
+#  - composer check-docblocks
+#  - composer copy-paste-detector
+#  - composer php-loc
 
 notifications:
   irc:
     channels:
-      - "chat.freenode.net#yourfreenodechannel"
+      - chat.freenode.net#honeybee
     on_success: always
     on_failure: always
     use_notice: false
     skip_join: false
+#  slack:
+#    secure: YOURSLACKKEY

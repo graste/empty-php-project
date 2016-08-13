@@ -1,6 +1,6 @@
 <?php
 
-namespace YourNameSpace\Tests;
+namespace YourProject\Tests;
 
 class YourTest extends BaseTestCase
 {
@@ -9,4 +9,3 @@ class YourTest extends BaseTestCase
         $this->assertEquals('1337', 1337);
     }
 }
-
