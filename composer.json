@@ -66,12 +66,6 @@
         ]
     },
     "scripts": {
-        "build": [
-            "@php-lint",
-            "@php-test",
-            "@reports",
-            "@validate-json"
-        ],
         "test": [
             "@php-lint",
             "@php-test",
@@ -86,7 +80,7 @@
             "@mess-detector"
         ],
         "docs": [
-            "apigen generate -s ./src -d ./build/docs/apigen --template-theme bootstrap --todo --tree --deprecated --no-source-code",
+            "apigen generate -s ./src -d ./build/coverage/docs/apigen --template-theme bootstrap --todo --tree --deprecated --no-source-code",
             "vendor/sami/sami/sami.php --ansi update sami.cfg.php"
         ],
         "check-docblocks": "phpdoccheck --skip-anonymous-functions -d src/",
@@ -102,11 +96,11 @@
         "php-loc": "phploc src",
         "php-test": "phpunit",
         "reports": [
-            "phploc --log-xml ./build/logs/phploc.xml --progress src || echo",
-            "phpcs -p -s --extensions=php --report=checkstyle --report-file=./build/logs/checkstyle.xml --standard='PSR1,PSR2' src/ tests/ || echo",
-            "phpcpd --log-pmd ./build/logs/phpcpd.xml --progress src/ tests/ || echo",
-            "phpmd src xml codesize,unusedcode,naming,cleancode,design --reportfile ./build/logs/phpmd.xml || echo",
-            "phpmd src html codesize,unusedcode,naming,cleancode,design --reportfile ./build/logs/phpmd.xml || echo"
+            "phploc --log-xml ./build/coverage/logs/phploc.xml --progress src || echo",
+            "phpcs -p -s --extensions=php --report=checkstyle --report-file=./build/coverage/logs/checkstyle.xml --standard='PSR1,PSR2' src/ tests/ || echo",
+            "phpcpd --log-pmd ./build/coverage/logs/phpcpd.xml --progress src/ tests/ || echo",
+            "phpmd src xml codesize,unusedcode,naming,cleancode,design --reportfile ./build/coverage/logs/phpmd.xml || echo",
+            "phpmd src html codesize,unusedcode,naming,cleancode,design --reportfile ./build/coverage/logs/phpmd.html || echo"
         ],
         "validate-json": "composer validate --no-check-all --no-check-lock",
         "validate-deps": "composer validate --with-dependencies --strict"

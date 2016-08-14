@@ -7,6 +7,11 @@
 /composer.lock
 composer.phar
 
+# other dependency tools
+node_modules
+components
+bower_components
+
 # general os and editors related stuff
 .DS_Store
 Thumbs.db

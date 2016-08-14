@@ -1,8 +1,8 @@
+# use [ci skip] or [skip ci] to skip a build in Travis CI
 language: php
 
-sudo: required
-dist: trusty
-group: edge
+git:
+  depth: 5 # default is 50
 
 php:
   - '5.6'
@@ -10,7 +10,19 @@ php:
   - hhvm
   - nightly
 
+branches:
+  except:
+    - gh-pages
+#    - legacy
+#    - experimental
+#  only:
+#  - master
+#  - stable
+#  - /^(?i:deploy)-.*$/
+
 env:
+  global:
+    - TRAVIS_CI_IS_AWESOME="YES"
   matrix:
     - PREFER="update --prefer-source --prefer-lowest --prefer-stable"
     - PREFER="update --prefer-source --prefer-stable"
@@ -22,22 +34,66 @@ matrix:
     - php: hhvm
     - php: nightly
 
-cache:
-  directories:
-    - $HOME/.composer/cache
+#cache:
+#  directories:
+#    - $HOME/.composer/cache
+
+# see https://docs.travis-ci.com/user/trusty-ci-environment (tl;dr: newer hhvm version)
+sudo: required
+dist: trusty
+group: edge
+
+#addons:
+# see https://docs.travis-ci.com/user/customizing-the-build/#Custom-Hostnames
+#  hosts:
+#  - yourhostname.dev
+# see https://docs.travis-ci.com/user/installing-dependencies/#Installing-Packages-with-the-APT-Addon
+# apt:
+#   sources:
+#   - …
+#   packages:
+#   - …
+
+
+#before_install:
+#  - sudo apt-get update -qq
+#  - sudo apt-get install -qq [packages]
+
+#install:
 
 before_script:
+#  - phpenv config-rm xdebug.ini
+#  - phpenv config-add myconfig.ini
+#  - echo 'date.timezone = "Europe/Paris"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer self-update
   - composer $PREFER
 
 script:
-  - composer build
-
-after_script:
-  - php vendor/bin/coveralls -v
+#  - phpdbg -qrr phpunit
+  - composer test
 #  - composer check-docblocks
 #  - composer copy-paste-detector
-#  - composer php-loc
+
+after_success:
+  - php vendor/bin/coveralls -v
+
+#after_failure:
+
+#before_deploy:
+#  - composer reports
+#  - composer docs
+
+#deploy:
+#  skip_cleanup: true
+#  # surge.sh deployment – needs SURGE_LOGIN and SURGE_TOKEN env variables set in Travis CI UI
+#  provider: surge
+#  project: ./build/coverage/
+#  domain: empty-php-project.surge.sh
+#  on: master
+
+#after_deploy:
+
+#after_script:
 
 notifications:
   irc:
