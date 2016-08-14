@@ -1,7 +1,30 @@
-JavaScript: false
-Ruby: false
-Python: false
-PHP: true
+engines:
+  scss-lint:
+    enabled: true
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+      - javascript
+  fixme:
+    enabled: true
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "PSR1,PSR2"
+  phpmd:
+    enabled: true
+    config:
+      file_extensions: "php"
+      rulesets: "unusedcode,codesize,naming,design,cleancode"
+
+ratings:
+  paths:
+  - "**.css"
+  - "**.php"
 
 exclude_paths:
-- tests/**/*
+  - tests/**/*
