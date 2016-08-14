@@ -65,8 +65,8 @@ before_script:
 #  - phpenv config-rm xdebug.ini
 #  - phpenv config-add myconfig.ini
 #  - echo 'date.timezone = "Europe/Paris"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  - composer self-update
-  - composer $PREFER
+  - travis_retry composer self-update
+  - travis_retry composer $PREFER
 
 script:
 #  - phpdbg -qrr phpunit
@@ -75,7 +75,7 @@ script:
 #  - composer copy-paste-detector
 
 after_success:
-  - php vendor/bin/coveralls -v
+  - travis_retry php vendor/bin/coveralls -v
 
 #after_failure:
 
